@@ -8,6 +8,9 @@ class Course(models.Model):
     technology = models.CharField(max_length=100)
     course_logo = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.course_title + ' - ' + self.author
+
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     file_type = models.CharField(max_length=10)
