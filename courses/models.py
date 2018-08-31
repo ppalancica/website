@@ -15,3 +15,6 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     file_type = models.CharField(max_length=10)
     lesson_title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.lesson_title
