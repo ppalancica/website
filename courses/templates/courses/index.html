@@ -1,5 +1,7 @@
 {% if all_courses %}
 
+  <h3>This are all available courses</h3>
+
   <ul>
     {% for course in all_courses %}
     <li><a href="/courses/{{ course.id }}">{{ course.course_title }}</a></li>
