@@ -2,7 +2,7 @@
 # from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 # from django.template import loader
-from .models import Course
+from .models import Course, Lesson
 
 # Create your views here.
 
@@ -32,3 +32,17 @@ def detail(request, course_id):
     return render(request, 'courses/detail.html', { 'course' : course })
 
     # return HttpResponse("<h2>Details for Course id: " + str(course_id) + "</h2>")
+
+def favorite(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    try:
+        selected_lesson = course.lesson_set.get(pk=request.POST['lesson'])
+    except (KeyError, Lesson.DoesNotExist):
+        return render(request, 'courses/detail.html', {
+            'course': course,
+            'error_message': 'You did not select a valid lesson'
+        })
+    else:
+        selected_lesson.is_favorite = True
+        selected_lesson.save()
+        return render(request, 'courses/detail.html', { 'course': course })
