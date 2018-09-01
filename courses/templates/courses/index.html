@@ -1,3 +1,7 @@
+<!-- Loading the path to our static files -->
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'courses/style.css' %}">
+
 {% if all_courses %}
 
   <h3>This are all available courses</h3>
