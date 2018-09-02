@@ -1,29 +1,37 @@
-<img src="{{ course.course_logo }}" />
+{% extends 'courses/base.html' %}
 
-<h1>{{ course.course_title }}</h1>
+{% block title %}Course Details{% endblock %}
 
-<h3>{{ course.author }}</h3>
+{% block body %}
 
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
+  <img src="{{ course.course_logo }}" />
 
-<form action="{% url 'courses:favorite' course.id %}" method="POST">
-    {% csrf_token %}
-    {% for lesson in course.lesson_set.all %}
-        <input type="radio" id="lesson{{ forloop.counter }}" name="lesson" value="{{ lesson.id }}">
-        <label for="lesson{{ forloop.counter }}">
-            {{ lesson.lesson_title }}
-            {% if lesson.is_favorite %}
-                <img src="http://i.imgur.com/b9b13Rd.png" />
-            {% endif %}
-        </label><br/>
+  <h1>{{ course.course_title }}</h1>
+
+  <h3>{{ course.author }}</h3>
+
+  {% if error_message %}
+      <p><strong>{{ error_message }}</strong></p>
+  {% endif %}
+
+  <form action="{% url 'courses:favorite' course.id %}" method="POST">
+      {% csrf_token %}
+      {% for lesson in course.lesson_set.all %}
+          <input type="radio" id="lesson{{ forloop.counter }}" name="lesson" value="{{ lesson.id }}">
+          <label for="lesson{{ forloop.counter }}">
+              {{ lesson.lesson_title }}
+              {% if lesson.is_favorite %}
+                  <img src="http://i.imgur.com/b9b13Rd.png" />
+              {% endif %}
+          </label><br/>
+      {% endfor %}
+      <input type="submit" value="Favorite">
+  </form>
+
+  <!-- <ul>
+    {% for lesson in course.lesson_set.all  %}
+      <li>{{ lesson.lesson_title }} - {{ lesson.file_type }}</li>
     {% endfor %}
-    <input type="submit" value="Favorite">
-</form>
+  </ul> -->
 
-<!-- <ul>
-  {% for lesson in course.lesson_set.all  %}
-    <li>{{ lesson.lesson_title }} - {{ lesson.file_type }}</li>
-  {% endfor %}
-</ul> -->
+{% endblock %}
