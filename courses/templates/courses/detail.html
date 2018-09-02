@@ -14,20 +14,6 @@
       <p><strong>{{ error_message }}</strong></p>
   {% endif %}
 
-  <form action="{% url 'courses:favorite' course.id %}" method="POST">
-      {% csrf_token %}
-      {% for lesson in course.lesson_set.all %}
-          <input type="radio" id="lesson{{ forloop.counter }}" name="lesson" value="{{ lesson.id }}">
-          <label for="lesson{{ forloop.counter }}">
-              {{ lesson.lesson_title }}
-              {% if lesson.is_favorite %}
-                  <img src="http://i.imgur.com/b9b13Rd.png" />
-              {% endif %}
-          </label><br/>
-      {% endfor %}
-      <input type="submit" value="Favorite">
-  </form>
-
   <!-- <ul>
     {% for lesson in course.lesson_set.all  %}
       <li>{{ lesson.lesson_title }} - {{ lesson.file_type }}</li>

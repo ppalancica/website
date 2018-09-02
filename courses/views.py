@@ -1,48 +1,15 @@
-# from django.http import Http404
-# from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-# from django.template import loader
-from .models import Course, Lesson
+from django.views import generic
+from .models import Course
 
-# Create your views here.
+class IndexView(generic.ListView):
+    template_name = 'courses/index.html'
 
-def index(request):
-    all_courses = Course.objects.all()
-    # template = loader.get_template('courses/index.html')
-    context = { 'all_courses' : all_courses }
+    # the default is object_list, but we want to use all_courses inside the views.py file
+    context_object_name = 'all_courses'
 
-    return render(request, 'courses/index.html', context)
+    def get_queryset(self):
+        return Course.objects.all()
 
-    # html = ''
-    #
-    # for course in all_courses:
-    #     url = '/courses/' + str(course.id) + '/'
-    #     html += '<a href="' + url + '">' + course.course_title + '</a><br/>'
-
-    # return HttpResponse(template.render(context, request))
-
-def detail(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
-
-    # try:
-    #     course = Course.objects.get(pk=course_id)
-    # except Course.DoesNotExist:
-    #     raise Http404("Album does not exist")
-
-    return render(request, 'courses/detail.html', { 'course' : course })
-
-    # return HttpResponse("<h2>Details for Course id: " + str(course_id) + "</h2>")
-
-def favorite(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
-    try:
-        selected_lesson = course.lesson_set.get(pk=request.POST['lesson'])
-    except (KeyError, Lesson.DoesNotExist):
-        return render(request, 'courses/detail.html', {
-            'course': course,
-            'error_message': 'You did not select a valid lesson'
-        })
-    else:
-        selected_lesson.is_favorite = True
-        selected_lesson.save()
-        return render(request, 'courses/detail.html', { 'course': course })
+class DetailView(generic.DetailView):
+    model = Course
+    template_name = 'courses/detail.html'

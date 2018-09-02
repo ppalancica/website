@@ -3,9 +3,11 @@
 {% block body %}
 
   {% if all_courses %}
-    <h3>This are all available courses</h3>
+    <h3>These are all available courses</h3>
     <ul>
+      <!-- object_list is the default name, but it can be overriden -->
       {% for course in all_courses %}
+
       <!-- <li><a href="/courses/{{ course.id }}">{{ course.course_title }}</a></li> -->
       <li><a href="{% url 'courses:detail' course.id %}">{{ course.course_title }}</a></li>
       {% endfor %}
