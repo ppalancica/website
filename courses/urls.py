@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-# from django.conf.urls import url
+from django.conf.urls import url
 
 app_name = 'courses'
 
@@ -20,5 +20,7 @@ urlpatterns = [
     # url(r'^(?P<course_id>[0-9]+)/favorite/$', views.favorite, name='favorite')
     # path('<int:course_id>/favorite/', views.favorite, name='favorite')
 
+    # /courses/course/add/
+    url(r'course/add/$', views.CourseCreate.as_view(), name='course-add')
 
 ]

@@ -1,4 +1,5 @@
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Course
 
 class IndexView(generic.ListView):
@@ -13,3 +14,7 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Course
     template_name = 'courses/detail.html'
+
+class CourseCreate(CreateView):
+    model = Course
+    fields = ['author', 'course_title', 'technology', 'course_logo']
