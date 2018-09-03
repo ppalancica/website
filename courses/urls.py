@@ -21,6 +21,12 @@ urlpatterns = [
     # path('<int:course_id>/favorite/', views.favorite, name='favorite')
 
     # /courses/course/add/
-    url(r'course/add/$', views.CourseCreate.as_view(), name='course-add')
+    url(r'course/add/$', views.CourseCreate.as_view(), name='course-add'),
+
+    # /courses/course/2/
+    url(r'course/(?P<pk>[0-9]+)/$', views.CourseUpdate.as_view(), name='course-update'),
+
+    # /courses/course/2/delete/
+    url(r'course/(?P<pk>[0-9]+)/delete/$', views.CourseDelete.as_view(), name='course-delete')
 
 ]

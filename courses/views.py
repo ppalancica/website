@@ -1,5 +1,7 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+# from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from .models import Course
 
 class IndexView(generic.ListView):
@@ -18,3 +20,12 @@ class DetailView(generic.DetailView):
 class CourseCreate(CreateView):
     model = Course
     fields = ['author', 'course_title', 'technology', 'course_logo']
+
+class CourseUpdate(UpdateView):
+    model = Course
+    fields = ['author', 'course_title', 'technology', 'course_logo']
+
+
+class CourseDelete(DeleteView):
+    model = Course
+    success_url = reverse_lazy('courses:index')
